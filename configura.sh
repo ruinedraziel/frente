@@ -18,43 +18,43 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 PS3='Menu de instalação guiada: '
-options=("1 TeamViewer" "2 AnyDesk" "3 Putty" "4 Dependências" "5 Ssh" "6 Vnc" "7 Automático" "8 Atalhos" "9 Numlockx" "10 Nitgen" "11 PDV" "12 Sair")
+options=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
 select opt in "${options[@]}"
 do
     case $opt in
-        "1  TeamViewer")
+        "TeamViewer")
             teamviewer
             ;;
-        "2 AnyDesk")
+        "AnyDesk")
             anydesk
             ;;
-        "3 Putty")
+        "Putty")
             ;;
-        "4 Dependências")
+        "Dependências")
             dependencias
             ;;
-        "5 Ssh")
+        "Ssh")
             ssh
             ;;
-        "6 Vnc")
+        "Vnc")
             vnc
             ;;
-        "7 Automático")
+        "Automático")
             autostart           
            ;;
-        "8 Atalhos")
+        "Atalhos")
             atalhos
             ;;
-        "9 Numlockx")
+        "Numlockx")
             numlockx
             ;;
-        "10 Nitgen")
+        "Nitgen")
             nitgen
             ;;
-        "11 PDV")
+        "PDV")
             pdv
             ;;
-        "12 Sair")
+        "Sair")
             break
             ;;
         *) echo "opcão invalida $REPLY";;
