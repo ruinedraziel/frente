@@ -22,39 +22,39 @@ options=("1 TeamViewer" "2 AnyDesk" "3 Putty" "4 Dependências" "5 Ssh" "6 Vnc" 
 select opt in "${options[@]}"
 do
     case $opt in
-        "1")
+        "1  TeamViewer")
             teamviewer
             ;;
-        "2")
+        "2 AnyDesk")
             anydesk
             ;;
-        "3")
+        "3 Putty")
             ;;
-        "4")
+        "4 Dependências")
             dependencias
             ;;
-        "5")
+        "5 Ssh")
             ssh
             ;;
-        "6")
+        "6 Vnc")
             vnc
             ;;
-        "7")
+        "7 Automático")
             autostart           
            ;;
-        "8")
+        "8 Atalhos")
             atalhos
             ;;
-        "9")
+        "9 Numlockx")
             numlockx
             ;;
-        "10")
+        "10 Nitgen")
             nitgen
             ;;
-        "11")
+        "11 PDV")
             pdv
             ;;
-        "12")
+        "12 Sair")
             break
             ;;
         *) echo "opcão invalida $REPLY";;
