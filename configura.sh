@@ -17,50 +17,6 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-PS3='Menu de instalação guiada: '
-options=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
-select opt in "${options[@]}"
-do
-    case $opt in
-        "TeamViewer")
-            teamviewer
-            ;;
-        "AnyDesk")
-            anydesk
-            ;;
-        "Putty")
-            ;;
-        "Dependências")
-            dependencias
-            ;;
-        "Ssh")
-            ssh
-            ;;
-        "Vnc")
-            vnc
-            ;;
-        "Automático")
-            autostart           
-           ;;
-        "Atalhos")
-            atalhos
-            ;;
-        "Numlockx")
-            numlockx
-            ;;
-        "Nitgen")
-            nitgen
-            ;;
-        "PDV")
-            pdv
-            ;;
-        "Sair")
-            break
-            ;;
-        *) echo "opcão invalida $REPLY";;
-    esac
-done
-
 teamviewer() {
    wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb 
    sudo apt install ./teamviewer_amd64.deb
@@ -309,6 +265,50 @@ pdv(){
     cd /home/
     ./instalar.sh
 }
+
+PS3='Menu de instalação guiada: '
+options=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "TeamViewer")
+            teamviewer
+            ;;
+        "AnyDesk")
+            anydesk
+            ;;
+        "Putty")
+            ;;
+        "Dependências")
+            dependencias
+            ;;
+        "Ssh")
+            ssh
+            ;;
+        "Vnc")
+            vnc
+            ;;
+        "Automático")
+            autostart           
+           ;;
+        "Atalhos")
+            atalhos
+            ;;
+        "Numlockx")
+            numlockx
+            ;;
+        "Nitgen")
+            nitgen
+            ;;
+        "PDV")
+            pdv
+            ;;
+        "Sair")
+            break
+            ;;
+        *) echo "opcão invalida $REPLY";;
+    esac
+done
 
 #feito por: Jefeson Miranda Operações, atualzado dia 22/05/25.
 # menu online criador por: Rafael Mercado - 04/06/2025
