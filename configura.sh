@@ -38,10 +38,12 @@ putty() {
 }
 
 autostart() {
-        usuario=$(logname)
+            usuario=$(logname)
         caminho="/home/$usuario"
         autostart_dir="$caminho/.config/autostart"
+
         mkdir -p "$autostart_dir"
+
         # fixaporta.desktop
         cat <<EOL > "$autostart_dir/fixaporta.desktop"
 [Desktop Entry]
@@ -59,13 +61,12 @@ Name=frente
 Type=Application
 Version=1.0
 EOL
-echo "Arquivos de autostart criados para fixaporta.sh e iniciarsudo.sh!"
+
+        echo "Arquivos de autostart criados para fixaporta.sh e iniciarsudo.sh!"
 }
 
 numlockx() {
-            sudo apt update
-            sudo apt install -y numlockx
-        UsuarioReal=$(logname)
+                UsuarioReal=$(logname)
         AutostartDir="/home/$UsuarioReal/.config/autostart"
         DesktopFile="$AutostartDir/numlockx.desktop"
 
@@ -86,8 +87,10 @@ X-GNOME-Autostart-enabled=true
 Name=NumLockX
 Comment=Enable NumLock at startup
 EOL
+        fi
             chown "$UsuarioReal:$UsuarioReal" "$DesktopFile"
-            echo "Numlockx instalado."
+            echo "Arquivo de inicialização automática criado com sucesso: $DesktopFile"
+            echo "Numlockx instalado"
 }
 
 vnc() {
@@ -142,29 +145,12 @@ EOF
         sudo systemctl start x11vnc.service
 
         echo "✅ x11vnc instalado com senha '$senha_vnc' e serviço iniciado!"
-    else
-        echo "Instalação do VNC ignorada."
-    fi
 }
 
 atalhos() {
-INICIAR_SUDO_FILE="[Desktop Entry]
-Type=Application
-Name=Iniciar Sudo
-Exec=/home/rpdv/iniciarsudo.senha
-Icon=utilities-terminal
-Terminal=true"
-SISTEMA_INI_FILE="[Desktop Entry]
-Type=Link
-Name=Sistema.ini
-URL=file:///home/rpdv/frente/sistema.ini
-Icon=text-x-generic"
-CONFIG_FILE="[Desktop Entry]
-Version=1.0
-Type=Link
-Name=Config CFG
-URL=file:///home/rpdv/frente/config.cfg
-Icon=text-x-generic" 
+INICIAR_SUDO_FILE="[Desktop Entry]\nType=Application\nName=Iniciar Sudo\nExec=/home/rpdv/iniciarsudo.senha\nIcon=utilities-terminal\nTerminal=true"
+SISTEMA_INI_FILE="[Desktop Entry]\nType=Link\nName=Sistema.ini\nURL=file:///home/rpdv/frente/sistema.ini\nIcon=text-x-generic"
+CONFIG_FILE="[Desktop Entry]\nVersion=1.0\nType=Link\nName=Config CFG\nURL=file:///home/rpdv/frente/config.cfg\nIcon=text-x-generic" 
 DESKTOP_PATH="/home/rpdv/Desktop"
 echo "$INICIAR_SUDO_FILE" > "$DESKTOP_PATH/IniciarSudo.desktop"
 echo "$SISTEMA_INI_FILE" > "$DESKTOP_PATH/SistemaINI.desktop"
@@ -204,8 +190,6 @@ nitgen() {
 		sudo ./install-driver.sh 
         echo "A biometria instalada com sucesso."
 }
-
-sudo apt install net-tools
 
 dependencias() {
     echo "🔍 Verificando arquitetura do sistema..."
@@ -265,6 +249,9 @@ pdv(){
     cd /home/
     ./instalar.sh
 }
+
+cd /home/
+sudo apt install net-tools
 
 PS3='Menu de instalação guiada: '
 options=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
