@@ -17,6 +17,37 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+function menu_selecao() {
+    local -r prompt="$1" outvar="$2" options=("${@:3}")
+    local cur=0 count=${#options[@]} index=0
+    local esc=$(echo -en "\e") # cache ESC as test doesn't allow esc codes
+    printf "$prompt\n"
+    while true
+    do
+        # list all options (option list is zero-based)
+        index=0 
+        for o in "${options[@]}"
+        do
+            if [ "$index" == "$cur" ]
+            then echo -e " >\e[7m$o\e[0m" # mark & highlight the current option
+            else echo "  $o"
+            fi
+            (( index++ ))
+        done
+        read -s -n3 key # wait for user to key in arrows or ENTER
+        if [[ $key == $esc[A ]] # up arrow
+        then (( cur-- )); (( cur < 0 )) && (( cur = 0 ))
+        elif [[ $key == $esc[B ]] # down arrow
+        then (( cur++ )); (( cur >= count )) && (( cur = count - 1 ))
+        elif [[ $key == "" ]] # nothing, i.e the read delimiter - ENTER
+        then break
+        fi
+        echo -en "\e[${count}A" # go up to the beginning to re-render
+    done
+    # export the selection to the requested output variable
+    printf -v $outvar "${options[$cur]}"
+}
+
 teamviewer() {
    wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb 
    sudo apt install ./teamviewer_amd64.deb
@@ -254,12 +285,10 @@ cd ~/
 sudo apt install net-tools
 
 menu(){
-    echo 'Menu de instalação guiada!'
-    PS3='Escolha uma opção:'
-    options=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
-    select opt in "${options[@]}"
-    do
-        case $opt in
+    selections=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
+    menu_selecao "Selecione uma opção" selected_choice "${selections[@]}"
+    echo "Você selecionou: $selected_choice"
+        case $selected_choice in
             "TeamViewer")
                 teamviewer
                 echo 'Menu de instalação guiada!'
@@ -286,33 +315,31 @@ menu(){
                 ;;
             "Automático")
                 autostart
-                echo 'Menu de instalação guiada!'
+                menu
             ;;
             "Atalhos")
                 atalhos
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Numlockx")
                 numlockx
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Nitgen")
                 nitgen
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "PDV")
                 pdv
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Sair")
-                break
-                echo 'Menu de instalação guiada!'
                 ;;
             *) echo "opcão invalida $REPLY";;
         esac
-    done
 }
-
 menu
+
+
 #feito por: Jefeson Miranda Operações, atualzado dia 22/05/25.
 # menu online criador por: Rafael Mercado - 04/06/2025
