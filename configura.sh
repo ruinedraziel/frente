@@ -282,7 +282,7 @@ pdv(){
 }
 
 cd ~/
-sudo apt install net-tools
+sudo apt install net-tools wget
 
 menu(){
     selections=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
