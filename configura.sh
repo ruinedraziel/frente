@@ -278,7 +278,7 @@ dependencias() {
 
 pdv(){
     cd /home/
-    ./instalar.sh
+    /home/rpdv/instalar.sh
 }
 
 cd ~/
