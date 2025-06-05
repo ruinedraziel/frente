@@ -285,7 +285,7 @@ cd ~/
 sudo apt install -y net-tools wget
 
 menu(){
-    selections=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
+    selections=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "AutoStart" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
     menu_selecao "Selecione uma opção" selected_choice "${selections[@]}"
     echo "Você selecionou: $selected_choice"
         case $selected_choice in
@@ -313,7 +313,7 @@ menu(){
                 vnc
                 menu
                 ;;
-            "Automático")
+            "AutoStart")
                 autostart
                 menu
             ;;
