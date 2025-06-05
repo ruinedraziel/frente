@@ -291,27 +291,27 @@ menu(){
         case $selected_choice in
             "TeamViewer")
                 teamviewer
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "AnyDesk")
                 anydesk
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Putty")
                 putty
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Dependências")
                 dependencias
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Ssh")
                 ssh
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Vnc")
                 vnc
-                echo 'Menu de instalação guiada!'
+                menu
                 ;;
             "Automático")
                 autostart
