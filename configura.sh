@@ -62,9 +62,8 @@ anydesk(){
 }
 
 putty() {
-    sudo apt-get install putty
+    sudo apt-get install -y putty screen
 	sudo usermod -a -G dialout rpdv
-    sudo apt-get install screen
     echo "Putty instalado"
 }
 
@@ -97,7 +96,8 @@ EOL
 }
 
 numlockx() {
-                UsuarioReal=$(logname)
+        sudo apt install -y numlockx
+        UsuarioReal=$(logname)
         AutostartDir="/home/$UsuarioReal/.config/autostart"
         DesktopFile="$AutostartDir/numlockx.desktop"
 
@@ -282,7 +282,7 @@ pdv(){
 }
 
 cd ~/
-sudo apt install net-tools wget
+sudo apt install -y net-tools wget
 
 menu(){
     selections=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
