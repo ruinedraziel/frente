@@ -250,52 +250,69 @@ pdv(){
     ./instalar.sh
 }
 
-cd /home/
+cd ~/
 sudo apt install net-tools
 
-PS3='Menu de instalação guiada: '
-options=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
-select opt in "${options[@]}"
-do
-    case $opt in
-        "TeamViewer")
-            teamviewer
+menu(){
+    echo 'Menu de instalação guiada!'
+    PS3='Escolha uma opção:'
+    options=("TeamViewer" "AnyDesk" "Putty" "Dependências" "Ssh" "Vnc" "Automático" "Atalhos" "Numlockx" "Nitgen" "PDV" "Sair")
+    select opt in "${options[@]}"
+    do
+        case $opt in
+            "TeamViewer")
+                teamviewer
+                echo 'Menu de instalação guiada!'
+                ;;
+            "AnyDesk")
+                anydesk
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Putty")
+                putty
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Dependências")
+                dependencias
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Ssh")
+                ssh
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Vnc")
+                vnc
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Automático")
+                autostart
+                echo 'Menu de instalação guiada!'
             ;;
-        "AnyDesk")
-            anydesk
-            ;;
-        "Putty")
-            ;;
-        "Dependências")
-            dependencias
-            ;;
-        "Ssh")
-            ssh
-            ;;
-        "Vnc")
-            vnc
-            ;;
-        "Automático")
-            autostart           
-           ;;
-        "Atalhos")
-            atalhos
-            ;;
-        "Numlockx")
-            numlockx
-            ;;
-        "Nitgen")
-            nitgen
-            ;;
-        "PDV")
-            pdv
-            ;;
-        "Sair")
-            break
-            ;;
-        *) echo "opcão invalida $REPLY";;
-    esac
-done
+            "Atalhos")
+                atalhos
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Numlockx")
+                numlockx
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Nitgen")
+                nitgen
+                echo 'Menu de instalação guiada!'
+                ;;
+            "PDV")
+                pdv
+                echo 'Menu de instalação guiada!'
+                ;;
+            "Sair")
+                break
+                echo 'Menu de instalação guiada!'
+                ;;
+            *) echo "opcão invalida $REPLY";;
+        esac
+    done
+}
 
+menu
 #feito por: Jefeson Miranda Operações, atualzado dia 22/05/25.
 # menu online criador por: Rafael Mercado - 04/06/2025
