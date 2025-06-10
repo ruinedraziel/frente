@@ -56,11 +56,11 @@ sudo apt-get -f install -y
 
     echo "Instalando TeamViewer"
     wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb 
-    sudo apt install ./teamviewer_amd64.deb
+    sudo dpkg -i teamviewer_amd64.deb
     echo "teamviewer instalado"
 
     echo "Instalando Anydesk"
-    wget https://download.anydesk.com/linux/anydesk_7.0.0-1_amd64.deb -o anydesk.deb
+    wget https://download.anydesk.com/linux/anydesk_7.0.0-1_amd64.deb -O anydesk.deb
     sudo dpkg -i anydesk.deb
     sudo apt-get install -f
     echo "AnyDesk instalado"
@@ -92,7 +92,7 @@ sudo apt-get -f install -y
             X-GNOME-Autostart-enabled=true
             Name=NumLockX
             Comment=Enable NumLock at startup
-            EOL
+EOL
         fi
         chown "$UsuarioReal:$UsuarioReal" "$DesktopFile"
         echo "Arquivo de inicialização automática criado com sucesso: $DesktopFile"
@@ -104,29 +104,8 @@ sudo apt-get -f install -y
         sudo apt install -y x11vnc expect
 
         UsuarioVNC=$(logname)
-        senha_vnc="1"
-
-        # Cria diretório de senha
-        sudo -u "$UsuarioVNC" mkdir -p "/home/$UsuarioVNC/.vnc"
-
-        # Usa expect para armazenar a senha do VNC
-        expect <<EOF
-        spawn sudo -u $UsuarioVNC x11vnc -storepasswd
-        expect "Enter VNC password:"
-        send "$senha_vnc\r"
-        expect "Verify password:"
-        send "$senha_vnc\r"
-        expect "Write password to /home/$UsuarioVNC/.vnc/passwd?*"
-        send "y\r"
-        expect eof
-EOF
-
-        # Ajusta permissões
-        sudo chmod 600 "/home/$UsuarioVNC/.vnc/passwd"
-        sudo chown "$UsuarioVNC:$UsuarioVNC" "/home/$UsuarioVNC/.vnc/passwd"
-
         # Cria serviço systemd
-        sudo tee /etc/systemd/system/x11vnc.service > /dev/null <<EOF
+        sudo cat<<EOL > "/etc/systemd/system/x11vnc.service"
         [Unit]
         Description=Start x11vnc at startup
         After=graphical.target
@@ -142,7 +121,7 @@ EOF
 
         [Install]
         WantedBy=multi-user.target
-EOF
+EOL
 
 sudo systemctl daemon-reload
 sudo systemctl enable x11vnc.service
@@ -162,7 +141,7 @@ echo "SSH instalado com sucesso."
         echo "Instalando a biometria..."
         
         # Atualiza os pacotes e instala a biometria
-        sudo apt install build-essential linux-headers-$(uname -r)
+        sudo apt install -y build-essential linux-headers-$(uname -r)
 	    git clone https://github.com/FingerTechBR/venus-linux-driver 
 		chmod -R 777 *
 		cd venus-linux-driver
@@ -174,7 +153,7 @@ echo "Configurando autologin/autostart"
         usuario=$(logname)
         caminho="/home/$usuario"
         autostart_dir="$caminho/.config/autostart"
-
+        mkdir "/etc/sddm.conf.d"
         mkdir -p "$autostart_dir"
         
         # iniciarsudo.desktop
@@ -186,10 +165,12 @@ Type=Application
 Version=1.0
 EOL
 
-        mkdir /etc/sddm.conf.d
+
         cat <<EOL > "/etc/sddm.conf.d/autologin.conf"
 [Autologin]
 User=$usuario
 Session=$DESKTOP_SESSION
 EOL
+
+
         echo "Autologin e autostart configurado!"
