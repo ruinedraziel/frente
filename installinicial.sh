@@ -29,7 +29,6 @@ sudo apt-get -f install -y
         "libusb-0.1-4:i386"
         "libusb-1.0-0:i386"
         "libgtk2.0-0:i386"
-        "libgtkmm-2.4-1c2:i386"
         "libcrypt1:i386"
         "libxml2:i386"
         "gtk2-engines:i386"
