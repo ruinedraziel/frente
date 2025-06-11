@@ -10,4 +10,4 @@ Instale as opções desejadas.
 
 *Instalação Automática:
 Para instalação automática use o comando:
-```bash <(curl -s https://raw.githubusercontent.com/ruinedraziel/frente/refs/heads/master/instala.sh)```
+```bash <(curl -s https://raw.githubusercontent.com/ruinedraziel/frente/refs/heads/master/installinicial.sh)```
