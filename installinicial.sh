@@ -128,7 +128,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable x11vnc.service
 sudo systemctl start x11vnc.service
 
-echo "✅ x11vnc instalado senha senha e serviço iniciado!"
+echo "✅ x11vnc instalado sem senha e serviço iniciado!"
 
 echo "Instalando o SSH..."
 
