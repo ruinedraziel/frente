@@ -1,8 +1,8 @@
-#Script de instalação frente de caixa:
+# Script de instalação frente de caixa:
 
-##Como utilizar:
+## Como utilizar
 
-###Menu de configurações
+### Menu de configurações
 Extraia a aplicação dentro de /home/rpdv.
 
 Abra o terminal ou conecte ao pdv por ssh e execute o seguinte comando:
@@ -11,9 +11,10 @@ Abra o terminal ou conecte ao pdv por ssh e execute o seguinte comando:
 bash <(curl -s https://raw.githubusercontent.com/ruinedraziel/frente/refs/heads/master/configura.sh)
 ```
 
-##Instale as opções desejadas.
+## Instale as opções desejadas.
 
-###Instalação Automática:
+### Instalação Automática
+
 Para instalação automática use o comando:
 
 ```
