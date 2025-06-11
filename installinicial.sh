@@ -38,7 +38,7 @@ sudo apt-get -f install -y
         "htop"
         "wget"
         "net-tools"
-        "set-serial"
+        "setserial"
     )
 
     echo "📦 Verificando e instalando bibliotecas necessárias..."
