@@ -34,6 +34,11 @@ sudo apt-get -f install -y
         "gtk2-engines:i386"
         "libcanberra-gtk-module:i386"
         "sqlite3:i386"
+        "mc"
+        "htop"
+        "wget"
+        "net-tools"
+        "set-serial"
     )
 
     echo "📦 Verificando e instalando bibliotecas necessárias..."
@@ -84,14 +89,14 @@ sudo apt-get -f install -y
             echo "O arquivo $DesktopFile já existe. Não será recriado."
         else
             cat <<EOL > "$DesktopFile"
-            [Desktop Entry]
-            Type=Application
-            Exec=numlockx on
-            Hidden=false
-            NoDisplay=false
-            X-GNOME-Autostart-enabled=true
-            Name=NumLockX
-            Comment=Enable NumLock at startup
+[Desktop Entry]
+Type=Application
+Exec=numlockx on
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=NumLockX
+Comment=Enable NumLock at startup
 EOL
         fi
         chown "$UsuarioReal:$UsuarioReal" "$DesktopFile"
@@ -101,33 +106,29 @@ EOL
         echo "Instalando VNC"
 
         sudo apt update
-        sudo apt install -y x11vnc expect
+        sudo apt install -y x11vnc
 
-        UsuarioVNC=$(logname)
         # Cria serviço systemd
         sudo cat<<EOL > "/etc/systemd/system/x11vnc.service"
-        [Unit]
-        Description=Start x11vnc at startup
-        After=graphical.target
-        Requires=graphical.target
+[Unit]
+Description=Start x11vnc at startup
+After=multi-user.target
+Requires=graphical.target
 
-        [Service]
-        Type=simple
-        ExecStartPre=/bin/sleep 10
-        ExecStart=/usr/bin/x11vnc -forever -usepw -display :0 -auth guess
-        User=$UsuarioVNC
-        Environment=DISPLAY=:0
-        Restart=on-failure
+[Service]
+Type=simple
+ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -rfbport 5900 -shared -display :0
+User=rpdv
 
-        [Install]
-        WantedBy=multi-user.target
+[Install]
+WantedBy=multi-user.target
 EOL
 
 sudo systemctl daemon-reload
 sudo systemctl enable x11vnc.service
 sudo systemctl start x11vnc.service
 
-echo "✅ x11vnc instalado com senha '$senha_vnc' e serviço iniciado!"
+echo "✅ x11vnc instalado senha senha e serviço iniciado!"
 
 echo "Instalando o SSH..."
 
@@ -173,4 +174,23 @@ Session=$DESKTOP_SESSION
 EOL
 
 
-        echo "Autologin e autostart configurado!"
+echo "Autologin e autostart configurado!"
+echo "Removendo protetor de tela do autostart!"
+sudo rm /etc/xdg/autostart/lxqt-xscreensaver-autostart.destkop
+echo "Xscreensaver removido!"
+
+echo "⏰ Configurando fuso horário para America/Campo_Grande (GMT-4)..."
+timedatectl set-timezone America/Campo_Grande
+
+echo "🚫 Desativando proteção de tela e bloqueio..."
+
+sudo -u rpdv bash -c "
+  qdbus org.freedesktop.ScreenSaver /ScreenSaver SetActive false || true
+  mkdir -p ~/.config/lxqt/
+  sed -i '/^lockScreenOnSleep=/d' ~/.config/lxqt/session.conf 2>/dev/null || true
+  echo 'lockScreenOnSleep=false' >> ~/.config/lxqt/session.conf
+  sed -i '/^screensaverTimeout=/d' ~/.config/lxqt/session.conf 2>/dev/null || true
+  echo 'screensaverTimeout=0' >> ~/.config/lxqt/session.conf
+  sed -i '/^idleTime=/d' ~/.config/lxqt/session.conf 2>/dev/null || true
+  echo 'idleTime=0' >> ~/.config/lxqt/session.conf
+"
